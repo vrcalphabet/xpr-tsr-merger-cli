@@ -11,5 +11,14 @@ class FileManager {
             return fs_1.default.statSync(path_1.default.join(dirPath, file)).isDirectory();
         });
     }
+    static readFile(filePath) {
+        try {
+            return fs_1.default.readFileSync(filePath, 'utf8');
+        }
+        catch (error) {
+            // ファイルが存在しない場合
+            return null;
+        }
+    }
 }
 exports.default = FileManager;
