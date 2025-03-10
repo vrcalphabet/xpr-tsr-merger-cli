@@ -1,5 +1,5 @@
 import XprTokenManager from './XprTokenManager';
-import xprErrorMessage from '../common/xprErrorMessage';
+import xprErrorMessage from './xprErrorMessage';
 import RegExp from './xprRegExp';
 import { XprTokenType } from './XprTokenType';
 import XprTokenError from './XprTokenError';

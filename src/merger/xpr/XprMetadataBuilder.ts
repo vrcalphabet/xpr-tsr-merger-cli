@@ -2,8 +2,8 @@ import { XprMetadata } from '../common/xpr';
 import XprTokenManager from './XprTokenManager';
 import RegExp from './xprRegExp';
 import XprTokenError from './XprTokenError';
-import xprErrorMessage from '../common/xprErrorMessage';
-import { XprErrorMessageGroup } from '../common/xprErrorMessage';
+import xprErrorMessage from './xprErrorMessage';
+import { XprErrorMessageGroup } from './xprErrorMessage';
 
 /** トークンからメタデータのみのトークンツリーを作成するクラス */
 export default class XprMetadataBuilder {

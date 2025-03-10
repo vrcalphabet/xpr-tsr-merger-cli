@@ -1,9 +1,10 @@
 import path from 'path';
 import FileManager from './FileManager';
 import XprParser from '../xpr/XprParser';
+import { XprGroup } from '../common/xpr';
 
 export default class FileMerger {
-  public static merge(dirPath: string): void | null {
+  public static merge(dirPath: string): XprGroup | null {
     const xprPath = path.join(dirPath, 'rule.xpr');
     const keysPath = path.join(dirPath, 'keys.json');
 
@@ -15,6 +16,11 @@ export default class FileMerger {
       return null;
     }
     
-    console.log(XprParser.parse(xprPath, xpr));
+    const xprTree = XprParser.parse(xprPath, xpr);
+    if (!xprTree) return null;
+    const keysTree = KeysParser.parse(keysPath, keys);
+    if (!keysTree) return null;
+    
+    return Object.assign(xprTree, { keys: keysTree });
   }
 }

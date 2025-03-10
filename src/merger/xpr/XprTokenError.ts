@@ -8,6 +8,7 @@ export default class XprTokenError {
   }
 
   private static sliceTokens(tokens: string[], index: number, offset: number): string[] {
+    tokens[index] = `【${tokens[index]}】`;
     const left = Math.max(0, index - offset);
     const right = Math.min(tokens.length, index + offset);
     return tokens.slice(left, right);
