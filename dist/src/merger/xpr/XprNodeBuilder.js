@@ -113,8 +113,12 @@ class XprNodeBuilder {
                         nodes: nodes,
                     };
                 case XprTokenType_1.XprTokenType.COMMA:
-                    if (key === '' || xpath === '') {
-                        this.error(xprErrorMessage_1.default.NODE.MISSING_KEY_OR_XPATH);
+                    if (!xpath) {
+                        this.error(xprErrorMessage_1.default.NODE.MISSING_XPATH);
+                        return null;
+                    }
+                    if (key === '' && custom === null) {
+                        this.error(xprErrorMessage_1.default.NODE.MISSING_KEY);
                         return null;
                     }
                     return {
