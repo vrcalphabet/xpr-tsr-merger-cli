@@ -22,7 +22,7 @@ export default {
   },
   NODE: {
     MISSING_XPATH: 'xpathが指定されていません。',
-    MISSING_KEY_OR_XPATH: 'keyまたはxpathが指定されていません。',
+    MISSING_KEY: 'keyを省略する場合はcustomCSSが必須です。',
     MISSING_NODE: 'ネストの中に最低でも1つのノードが必要です。',
     KEY_ATTRIBUTE_CUSTOM_ERROR: '親ノードにkey, attribute, customは指定できません。',
   },
