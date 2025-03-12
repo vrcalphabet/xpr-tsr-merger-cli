@@ -53,7 +53,7 @@ export default class XprMetadataBuilder {
           return {
             includes: this.includes,
             excludes: this.excludes,
-            keys: {},
+            transKeys: {},
           };
       }
     }

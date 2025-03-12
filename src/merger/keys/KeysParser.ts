@@ -1,11 +1,11 @@
-import { Keys } from '../common/Keys';
+import { TransKeys } from '../common/TransKeys';
 
 export default class KeysParser {
-  public static parse(keys: string): Keys | null {
+  public static parse(keys: string): TransKeys | null {
     try {
       const keysObj = JSON.parse(keys);
       this.recursive(keysObj);
-      return keysObj as Keys;
+      return keysObj as TransKeys;
     } catch (e) {
       console.error('"keys.json" のパースに失敗しました。有効なJSON形式ではありません。');
       return null;

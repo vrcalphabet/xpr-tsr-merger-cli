@@ -1,4 +1,4 @@
-import { Keys } from './keys';
+import { TransKeys } from './TransKeys';
 
 export type Xpr = Array<XprGroup>;
 export type XprGroup = XprMetadata & XprNodes;
@@ -6,7 +6,7 @@ export type XprGroup = XprMetadata & XprNodes;
 export type XprMetadata = {
   includes: XprPathList;
   excludes: XprPathList;
-  keys: Keys | {};
+  transKeys: TransKeys | {};
 };
 export type XprNodes = {
   nodes: XprNodeList;
