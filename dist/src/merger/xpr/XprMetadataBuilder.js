@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const xprErrorMessage_1 = __importDefault(require("./xprErrorMessage"));
 const xprRegExp_1 = __importDefault(require("./xprRegExp"));
 const XprTokenError_1 = __importDefault(require("./XprTokenError"));
-const xprErrorMessage_1 = __importDefault(require("./xprErrorMessage"));
 /** トークンからメタデータのみのトークンツリーを作成するクラス */
 class XprMetadataBuilder {
     /** トークンの配列 */
@@ -26,7 +26,7 @@ class XprMetadataBuilder {
         while (true) {
             this.nextToken();
             // メタデータに何も記述されていない場合、エラー
-            if (this.token === null) {
+            if (!this.token) {
                 this.error(xprErrorMessage_1.default.GENERAL.MISSING_METADATA);
                 return null;
             }
@@ -55,8 +55,7 @@ class XprMetadataBuilder {
             }
         }
     }
-    parseToken() {
-    }
+    parseToken() { }
     /**
      * `@includes`文を解析します。
      * @returns `directory-path[]` includesディレクトリパスの配列
@@ -64,7 +63,7 @@ class XprMetadataBuilder {
     parseIncludes() {
         /** ディレクトリパスの配列 */
         const directories = this.parseDirectories(xprErrorMessage_1.default.INCLUDES);
-        if (directories === null)
+        if (!directories)
             return;
         this.includes = directories;
     }
@@ -75,7 +74,7 @@ class XprMetadataBuilder {
     parseExcludes() {
         /** ディレクトリパスの配列 */
         const directories = this.parseDirectories(xprErrorMessage_1.default.EXCLUDES);
-        if (directories === null)
+        if (!directories)
             return;
         this.excludes = directories;
     }
@@ -99,7 +98,7 @@ class XprMetadataBuilder {
                 break;
             /** ディレクトリパス */
             const directory = this.parseDirectory(messageGroup);
-            if (directory === null)
+            if (!directory)
                 return null;
             directories.push(directory);
         }
@@ -112,7 +111,7 @@ class XprMetadataBuilder {
      */
     parseDirectory(messageGroup) {
         // 次のトークンがない場合はエラー
-        if (this.token === null) {
+        if (!this.token) {
             this.error(messageGroup.MISSING_DIRECTORY);
             return null;
         }
@@ -145,7 +144,7 @@ class XprMetadataBuilder {
      * @returns true: 正規表現パターンにマッチしている場合、false: マッチしていない場合
      */
     validateRegex(regex) {
-        return this.token !== null && regex.test(this.token);
+        return !!this.token && regex.test(this.token);
     }
     /** 次のトークンをthis.tokenに格納します。 */
     nextToken() {

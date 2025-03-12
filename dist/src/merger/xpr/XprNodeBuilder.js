@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const xprErrorMessage_1 = __importDefault(require("./xprErrorMessage"));
 const xprRegExp_1 = __importDefault(require("./xprRegExp"));
-const XprTokenType_1 = require("./XprTokenType");
 const XprTokenError_1 = __importDefault(require("./XprTokenError"));
+const XprTokenType_1 = require("./XprTokenType");
 /** トークンからノードデータのみのトークンツリーを作成するクラス */
 class XprNodeBuilder {
     /** トークンの配列 */
@@ -24,11 +24,11 @@ class XprNodeBuilder {
         while (true) {
             /** 一つの子ノード、もしくは親ノード */
             const node = this.recursive(false);
-            if (node === null)
+            if (!node)
                 return null;
             nodes.nodes.push(node);
             const token = this.peekToken();
-            if (token === null)
+            if (!token)
                 break;
         }
         return nodes;
@@ -54,7 +54,7 @@ class XprNodeBuilder {
         while (true) {
             this.nextToken();
             // トークンがない場合、エラー
-            if (this.token === null) {
+            if (!this.token) {
                 this.error(xprErrorMessage_1.default.GENERAL.INVALID_TOKEN_END);
                 return null;
             }
@@ -83,14 +83,14 @@ class XprNodeBuilder {
                     break;
                 // 特殊記号
                 case XprTokenType_1.XprTokenType.BRACKET_OPEN:
-                    if (key !== '' || attribute !== null || custom !== null) {
+                    if (key || attribute || custom) {
                         this.error(xprErrorMessage_1.default.NODE.KEY_ATTRIBUTE_CUSTOM_ERROR);
                         return null;
                     }
                     while (true) {
                         // 入れ子を探索
                         const node = this.recursive(multi);
-                        if (node === null)
+                        if (!node)
                             return null;
                         nodes.push(node);
                         // 次のトークンが`}`の場合、XprValueType.BRACKET_CLOSEに移動する
@@ -100,7 +100,7 @@ class XprNodeBuilder {
                     }
                     break;
                 case XprTokenType_1.XprTokenType.BRACKET_CLOSE:
-                    if (xpath === null) {
+                    if (!xpath) {
                         this.error(xprErrorMessage_1.default.NODE.MISSING_XPATH);
                         return null;
                     }
@@ -165,7 +165,7 @@ class XprNodeBuilder {
      * @returns true: マッチする場合、false: マッチしない場合
      */
     validateToken(...expectedTokens) {
-        return this.token !== null && expectedTokens.includes(this.token);
+        return !!this.token && expectedTokens.includes(this.token);
     }
     /**
      * 現在のトークンが正規表現パターンにマッチしているかを判定します。
@@ -173,7 +173,7 @@ class XprNodeBuilder {
      * @returns true: 正規表現パターンにマッチしている場合、false: マッチしていない場合
      */
     validateRegex(regex) {
-        return this.token !== null && regex.test(this.token);
+        return !!this.token && regex.test(this.token);
     }
     /** 次のトークンを取得します。ポインタが移動することはありません。 */
     peekToken() {

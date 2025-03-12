@@ -11,6 +11,12 @@ class FileManager {
             return fs_1.default.statSync(path_1.default.join(dirPath, file)).isDirectory();
         });
     }
+    static makeDir(dirPath) {
+        const dir = path_1.default.dirname(dirPath);
+        if (!fs_1.default.existsSync(dir)) {
+            fs_1.default.mkdirSync(dir, { recursive: true });
+        }
+    }
     static readFile(filePath) {
         try {
             return fs_1.default.readFileSync(filePath, 'utf8');
@@ -19,6 +25,10 @@ class FileManager {
             // ファイルが存在しない場合
             return null;
         }
+    }
+    static writeFile(filePath, data) {
+        this.makeDir(filePath);
+        fs_1.default.writeFileSync(filePath, data);
     }
 }
 exports.default = FileManager;

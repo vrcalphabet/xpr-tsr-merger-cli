@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const XprTokenManager_1 = __importDefault(require("./XprTokenManager"));
 const xprRegExp_1 = __importDefault(require("./xprRegExp"));
+const XprTokenManager_1 = __importDefault(require("./XprTokenManager"));
 /** xpr形式の文字列をトークンに分割するためのクラス */
 class XprTokenizer {
     /**

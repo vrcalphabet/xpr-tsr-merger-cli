@@ -15,11 +15,11 @@ class XprBuilder {
     static build(tokens) {
         /** メタデータのツリー */
         const metadata = new XprMetadataBuilder_1.default().build(tokens);
-        if (metadata === null)
+        if (!metadata)
             return null;
         /** ノードのツリー */
         const nodes = new XprNodeBuilder_1.default().build(tokens);
-        if (nodes === null)
+        if (!nodes)
             return null;
         // メタデータとノードを結合
         return Object.assign(metadata, nodes);
