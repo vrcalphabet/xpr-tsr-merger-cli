@@ -1,5 +1,5 @@
-import XprTokenManager from './XprTokenManager';
 import RegExp from './xprRegExp';
+import XprTokenManager from './XprTokenManager';
 
 /** xpr形式の文字列をトークンに分割するためのクラス */
 export default class XprTokenizer {

@@ -1,5 +1,5 @@
-import { Xpr } from './xpr';
 import { Tsr } from './tsr';
+import { Xpr } from './xpr';
 
 export type XprTsr = {
   rules: Xpr;

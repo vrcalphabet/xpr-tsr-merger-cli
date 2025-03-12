@@ -1,9 +1,8 @@
-import { XprMetadata } from '../common/xpr';
-import XprTokenManager from './XprTokenManager';
+import { XprMetadata } from '../common/Xpr';
+import xprErrorMessage, { XprErrorMessageGroup } from './xprErrorMessage';
 import RegExp from './xprRegExp';
 import XprTokenError from './XprTokenError';
-import xprErrorMessage from './xprErrorMessage';
-import { XprErrorMessageGroup } from './xprErrorMessage';
+import XprTokenManager from './XprTokenManager';
 
 /** トークンからメタデータのみのトークンツリーを作成するクラス */
 export default class XprMetadataBuilder {
@@ -27,7 +26,7 @@ export default class XprMetadataBuilder {
     while (true) {
       this.nextToken();
       // メタデータに何も記述されていない場合、エラー
-      if (this.token === null) {
+      if (!this.token) {
         this.error(xprErrorMessage.GENERAL.MISSING_METADATA);
         return null;
       }
@@ -60,9 +59,7 @@ export default class XprMetadataBuilder {
     }
   }
 
-  public parseToken(): void {
-    
-  }
+  public parseToken(): void {}
 
   /**
    * `@includes`文を解析します。
@@ -71,7 +68,7 @@ export default class XprMetadataBuilder {
   private parseIncludes(): void {
     /** ディレクトリパスの配列 */
     const directories = this.parseDirectories(xprErrorMessage.INCLUDES);
-    if (directories === null) return;
+    if (!directories) return;
 
     this.includes = directories;
   }
@@ -83,8 +80,8 @@ export default class XprMetadataBuilder {
   private parseExcludes(): void {
     /** ディレクトリパスの配列 */
     const directories = this.parseDirectories(xprErrorMessage.EXCLUDES);
-    if (directories === null) return;
-    
+    if (!directories) return;
+
     this.excludes = directories;
   }
 
@@ -93,9 +90,7 @@ export default class XprMetadataBuilder {
    * @param messageGroup エラーメッセージのブロック
    * @returns `directory-path[]` ディレクトリパスの配列
    */
-  private parseDirectories(
-    messageGroup: XprErrorMessageGroup
-  ): Array<string> | null {
+  private parseDirectories(messageGroup: XprErrorMessageGroup): Array<string> | null {
     this.nextToken();
     // 次のトークンがブロックの始まりでなければエラー
     if (!this.validateToken('{')) {
@@ -111,7 +106,7 @@ export default class XprMetadataBuilder {
 
       /** ディレクトリパス */
       const directory = this.parseDirectory(messageGroup);
-      if (directory === null) return null;
+      if (!directory) return null;
       directories.push(directory);
     }
 
@@ -125,7 +120,7 @@ export default class XprMetadataBuilder {
    */
   private parseDirectory(messageGroup: XprErrorMessageGroup): string | null {
     // 次のトークンがない場合はエラー
-    if (this.token === null) {
+    if (!this.token) {
       this.error(messageGroup.MISSING_DIRECTORY);
       return null;
     }
@@ -162,7 +157,7 @@ export default class XprMetadataBuilder {
    * @returns true: 正規表現パターンにマッチしている場合、false: マッチしていない場合
    */
   private validateRegex(regex: RegExp): boolean {
-    return this.token !== null && regex.test(this.token);
+    return !!this.token && regex.test(this.token);
   }
 
   /** 次のトークンをthis.tokenに格納します。 */
@@ -174,7 +169,7 @@ export default class XprMetadataBuilder {
   private prevToken(): void {
     this.token = this.tokens.prevToken();
   }
-  
+
   /** エラーメッセージを表示します。 */
   private error(message: string): void {
     XprTokenError.show(this.tokens, message);

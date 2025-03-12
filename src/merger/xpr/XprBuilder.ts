@@ -1,7 +1,7 @@
-import XprTokenManager from './XprTokenManager';
+import { XprGroup } from '../common/Xpr';
 import XprMetadataBuilder from './XprMetadataBuilder';
 import XprNodeBuilder from './XprNodeBuilder';
-import { XprGroup } from '../common/xpr';
+import XprTokenManager from './XprTokenManager';
 
 /** トークンからツリーを生成するクラス */
 export default class XprBuilder {
@@ -13,10 +13,10 @@ export default class XprBuilder {
   public static build(tokens: XprTokenManager): XprGroup | null {
     /** メタデータのツリー */
     const metadata = new XprMetadataBuilder().build(tokens);
-    if (metadata === null) return null;
+    if (!metadata) return null;
     /** ノードのツリー */
     const nodes = new XprNodeBuilder().build(tokens);
-    if (nodes === null) return null;
+    if (!nodes) return null;
 
     // メタデータとノードを結合
     return Object.assign(metadata, nodes) satisfies XprGroup;

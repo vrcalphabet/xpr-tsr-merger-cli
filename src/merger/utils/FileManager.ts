@@ -7,7 +7,14 @@ export default class FileManager {
       return fs.statSync(path.join(dirPath, file)).isDirectory();
     });
   }
-  
+
+  public static makeDir(dirPath: string): void {
+    const dir = path.dirname(dirPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  }
+
   public static readFile(filePath: string): string | null {
     try {
       return fs.readFileSync(filePath, 'utf8');
@@ -15,5 +22,10 @@ export default class FileManager {
       // ファイルが存在しない場合
       return null;
     }
+  }
+
+  public static writeFile(filePath: string, data: string): void {
+    this.makeDir(filePath);
+    fs.writeFileSync(filePath, data);
   }
 }
