@@ -10,6 +10,7 @@ const picocolors_1 = __importDefault(require("picocolors"));
 const merge_1 = __importDefault(require("./merger/merge"));
 const Watcher_1 = __importDefault(require("./Watcher"));
 function index(input, output) {
+    console.clear();
     console.log('xpr+tsrマージシステム:', picocolors_1.default.green(`v${process.env.npm_package_version}`));
     console.log();
     const inputPath = path_1.default.resolve(process.cwd(), input);
@@ -27,10 +28,10 @@ function index(input, output) {
     console.log();
     const watcher = new Watcher_1.default();
     console.log('フォルダ監視中...');
-    watcher.watch(inputPath, () => {
+    watcher.watch(inputPath, async () => {
         console.clear();
         console.log('ファイルが変更されました。');
-        if ((0, merge_1.default)(inputPath, outputPath)) {
+        if (await (0, merge_1.default)(inputPath, outputPath)) {
             console.log('マージが完了しました。');
         }
         console.log('フォルダ監視中...');

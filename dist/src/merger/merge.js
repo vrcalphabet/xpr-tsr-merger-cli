@@ -7,18 +7,17 @@ exports.default = merge;
 const path_1 = __importDefault(require("path"));
 const picocolors_1 = __importDefault(require("picocolors"));
 const TsrParser_1 = __importDefault(require("./tsr/TsrParser"));
+const utils_1 = require("./utils");
 const FileManager_1 = __importDefault(require("./utils/FileManager"));
 const FileMerger_1 = __importDefault(require("./utils/FileMerger"));
-function merge(input, output) {
+async function merge(input, output) {
     const xprResult = [];
     const directories = FileManager_1.default.directories(input);
     for (const dir of directories) {
-        if (dir === 'emailtwofactorauth') {
-            const mergedContent = FileMerger_1.default.merge(path_1.default.join(input, dir));
-            if (!mergedContent)
-                return false;
-            xprResult.push(mergedContent);
-        }
+        const mergedContent = await FileMerger_1.default.merge(path_1.default.join(input, dir));
+        if (!mergedContent)
+            return false;
+        xprResult.push(mergedContent);
     }
     const tsrPath = path_1.default.join(input, 'trans.json');
     const tsr = FileManager_1.default.readFile(tsrPath);
@@ -30,6 +29,9 @@ function merge(input, output) {
     const tsrResult = TsrParser_1.default.parse(tsr);
     if (!tsrResult)
         return false;
+    await (0, utils_1.wait)(250);
+    (0, utils_1.eraseUp)();
+    console.log(`${picocolors_1.default.greenBright('パース完了')}:`, tsrPath);
     const xprTsr = {
         rules: xprResult,
         trans: tsrResult,

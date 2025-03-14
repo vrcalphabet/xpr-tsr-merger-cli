@@ -7,11 +7,12 @@ const path_1 = __importDefault(require("path"));
 const picocolors_1 = __importDefault(require("picocolors"));
 const KeysParser_1 = __importDefault(require("../keys/KeysParser"));
 const XprParser_1 = __importDefault(require("../xpr/XprParser"));
+const _1 = require("./");
 const FileManager_1 = __importDefault(require("./FileManager"));
 class FileMerger {
     static xprFile = 'rule.xpr';
     static keysFile = 'keys.json';
-    static merge(dirPath) {
+    static async merge(dirPath) {
         const xprPath = path_1.default.join(dirPath, this.xprFile);
         const keysPath = path_1.default.join(dirPath, this.keysFile);
         const xpr = FileManager_1.default.readFile(xprPath);
@@ -24,11 +25,17 @@ class FileMerger {
         const xprTree = XprParser_1.default.parse(xpr);
         if (!xprTree)
             return null;
+        await (0, _1.wait)(250);
+        (0, _1.eraseUp)();
+        console.log(`${picocolors_1.default.greenBright('パース完了')}:`, xprPath);
         console.log(`${picocolors_1.default.yellow('パース中')}:`, keysPath);
         const keysTree = KeysParser_1.default.parse(keys);
         if (!keysTree)
             return null;
-        return Object.assign(xprTree, { keys: keysTree });
+        await (0, _1.wait)(250);
+        (0, _1.eraseUp)();
+        console.log(`${picocolors_1.default.greenBright('パース完了')}:`, keysPath);
+        return Object.assign(xprTree, { transKeys: keysTree });
     }
 }
 exports.default = FileMerger;
