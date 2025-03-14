@@ -5,6 +5,7 @@ import merge from './merger/merge';
 import Watcher from './Watcher';
 
 export default function index(input: string, output: string) {
+  console.clear();
   console.log('xpr+tsrマージシステム:', pc.green(`v${process.env.npm_package_version}`));
   console.log();
 
@@ -28,10 +29,10 @@ export default function index(input: string, output: string) {
   const watcher = new Watcher();
   console.log('フォルダ監視中...');
 
-  watcher.watch(inputPath, () => {
+  watcher.watch(inputPath, async () => {
     console.clear();
     console.log('ファイルが変更されました。');
-    if (merge(inputPath, outputPath)) {
+    if (await merge(inputPath, outputPath)) {
       console.log('マージが完了しました。');
     }
     console.log('フォルダ監視中...');

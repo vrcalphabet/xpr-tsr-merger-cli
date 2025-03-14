@@ -3,19 +3,18 @@ import pc from 'picocolors';
 import { Xpr } from './common/Xpr';
 import { XprTsr } from './common/XprTsr';
 import TsrParser from './tsr/TsrParser';
+import { eraseUp, wait } from './utils';
 import FileManager from './utils/FileManager';
 import FileMerger from './utils/FileMerger';
 
-export default function merge(input: string, output: string): boolean {
+export default async function merge(input: string, output: string): Promise<boolean> {
   const xprResult: Xpr = [];
   const directories = FileManager.directories(input);
   for (const dir of directories) {
-    if (dir === 'emailtwofactorauth') {
-      const mergedContent = FileMerger.merge(path.join(input, dir));
-      if (!mergedContent) return false;
+    const mergedContent = await FileMerger.merge(path.join(input, dir));
+    if (!mergedContent) return false;
 
-      xprResult.push(mergedContent);
-    }
+    xprResult.push(mergedContent);
   }
 
   const tsrPath = path.join(input, 'trans.json');
@@ -28,6 +27,10 @@ export default function merge(input: string, output: string): boolean {
   console.log(`${pc.yellow('パース中')}:`, tsrPath);
   const tsrResult = TsrParser.parse(tsr);
   if (!tsrResult) return false;
+
+  await wait(250);
+  eraseUp();
+  console.log(`${pc.greenBright('パース完了')}:`, tsrPath);
 
   const xprTsr = {
     rules: xprResult,
