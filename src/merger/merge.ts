@@ -28,7 +28,7 @@ export default async function merge(input: string, output: string): Promise<bool
   const tsrResult = TsrParser.parse(tsr);
   if (!tsrResult) return false;
 
-  await wait(250);
+  await wait(100);
   eraseUp();
   console.log(`${pc.greenBright('パース完了')}:`, tsrPath);
 

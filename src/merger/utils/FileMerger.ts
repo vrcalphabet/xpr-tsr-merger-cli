@@ -30,7 +30,7 @@ export default class FileMerger {
     const xprTree = XprParser.parse(xpr);
     if (!xprTree) return null;
 
-    await wait(250);
+    await wait(100);
     eraseUp();
     console.log(`${pc.greenBright('パース完了')}:`, xprPath);
 
@@ -38,7 +38,7 @@ export default class FileMerger {
     const keysTree = KeysParser.parse(keys);
     if (!keysTree) return null;
 
-    await wait(250);
+    await wait(100);
     eraseUp();
     console.log(`${pc.greenBright('パース完了')}:`, keysPath);
 

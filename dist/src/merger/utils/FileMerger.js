@@ -25,14 +25,14 @@ class FileMerger {
         const xprTree = XprParser_1.default.parse(xpr);
         if (!xprTree)
             return null;
-        await (0, _1.wait)(250);
+        await (0, _1.wait)(100);
         (0, _1.eraseUp)();
         console.log(`${picocolors_1.default.greenBright('パース完了')}:`, xprPath);
         console.log(`${picocolors_1.default.yellow('パース中')}:`, keysPath);
         const keysTree = KeysParser_1.default.parse(keys);
         if (!keysTree)
             return null;
-        await (0, _1.wait)(250);
+        await (0, _1.wait)(100);
         (0, _1.eraseUp)();
         console.log(`${picocolors_1.default.greenBright('パース完了')}:`, keysPath);
         return Object.assign(xprTree, { transKeys: keysTree });

@@ -29,7 +29,7 @@ async function merge(input, output) {
     const tsrResult = TsrParser_1.default.parse(tsr);
     if (!tsrResult)
         return false;
-    await (0, utils_1.wait)(250);
+    await (0, utils_1.wait)(100);
     (0, utils_1.eraseUp)();
     console.log(`${picocolors_1.default.greenBright('パース完了')}:`, tsrPath);
     const xprTsr = {
