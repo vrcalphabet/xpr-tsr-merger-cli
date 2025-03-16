@@ -1,10 +1,10 @@
 import path from 'path';
 import pc from 'picocolors';
-import { XprGroup } from '../merger/common/Xpr';
 import XprParser from '../merger/xpr/XprParser';
 import { eraseUp, wait } from '../utils';
 import FileManager from '../utils/FileManager';
 import KeyComplementer from './KeyComplementer';
+import KeysKeyExtractor from './KeysKeyExtractor';
 import KeysParser from './KeysParser';
 import XprKeyExtractor from './XprKeyExtractor';
 
@@ -12,7 +12,7 @@ export default class FileComplementer {
   private static xprFile = 'rule.xpr';
   private static keysFile = 'keys.json';
 
-  public static async complete(dirPath: string): Promise<boolean> {
+  public static async complete(dirPath: string, allKeys: string[]): Promise<boolean> {
     const xprPath = path.join(dirPath, this.xprFile);
     const keysPath = path.join(dirPath, this.keysFile);
 
@@ -37,8 +37,12 @@ export default class FileComplementer {
     const keysTree = KeysParser.parse(keys);
     if (!keysTree) return false;
 
+    const beforeJSON = JSON.stringify(keysTree);
+
     const completedKeys = KeyComplementer.complete(keysTree, xprKeys);
-    const beforeJSON = JSON.stringify(JSON.parse(keys ?? '{}'));
+    const keysKey = KeysKeyExtractor.extract(completedKeys);
+    allKeys.push(...keysKey);
+
     const afterJSON = JSON.stringify(completedKeys);
 
     await wait(100);
