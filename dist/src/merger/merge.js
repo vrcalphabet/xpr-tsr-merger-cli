@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = merge;
 const path_1 = __importDefault(require("path"));
 const picocolors_1 = __importDefault(require("picocolors"));
+const utils_1 = require("../utils");
+const FileManager_1 = __importDefault(require("../utils/FileManager"));
+const FileMerger_1 = __importDefault(require("./common/FileMerger"));
 const TsrParser_1 = __importDefault(require("./tsr/TsrParser"));
-const utils_1 = require("./utils");
-const FileManager_1 = __importDefault(require("./utils/FileManager"));
-const FileMerger_1 = __importDefault(require("./utils/FileMerger"));
 async function merge(input, output) {
     const xprResult = [];
     const directories = FileManager_1.default.directories(input);

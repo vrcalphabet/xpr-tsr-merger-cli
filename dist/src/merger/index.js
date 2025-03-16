@@ -7,7 +7,7 @@ exports.default = index;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const picocolors_1 = __importDefault(require("picocolors"));
-const merge_1 = __importDefault(require("./merger/merge"));
+const merge_1 = __importDefault(require("./merge"));
 const Watcher_1 = __importDefault(require("./Watcher"));
 function index(input, output) {
     console.clear();
