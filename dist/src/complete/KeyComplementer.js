@@ -2,20 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class KeyComplementer {
     static transKeys;
-    static complete(transKeys, keys) {
+    static complete(transKeys, keys, completeString) {
         this.transKeys = transKeys;
         for (const key of keys) {
-            this.create(key.split('.'));
+            this.create(key.split('.'), completeString);
         }
         return this.transKeys;
     }
-    static create(key) {
+    static create(key, completeString) {
         let temp = this.transKeys;
-        for (const k of key) {
+        for (const [i, k] of key.entries()) {
             if (typeof temp[k] === 'string')
                 return;
             if (!(k in temp)) {
-                temp[k] = {};
+                if (completeString && key.length === i + 1) {
+                    temp[k] = "__________";
+                    return;
+                }
+                else {
+                    temp[k] = {};
+                }
             }
             temp = temp[k];
         }
