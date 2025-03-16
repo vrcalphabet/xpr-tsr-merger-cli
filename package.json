@@ -1,13 +1,12 @@
 {
   "name": "xpr-tsr-merger-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "index.js",
   "bin": {
     "merger": "dist/bin/cli.js"
   },
   "scripts": {
-    "build": "tsc",
-    "start": "tsc && node dist/bin/cli.js"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

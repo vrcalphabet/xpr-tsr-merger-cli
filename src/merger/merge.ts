@@ -1,11 +1,11 @@
 import path from 'path';
 import pc from 'picocolors';
+import { eraseUp, wait } from '../utils';
+import FileManager from '../utils/FileManager';
+import FileMerger from './common/FileMerger';
 import { Xpr } from './common/Xpr';
 import { XprTsr } from './common/XprTsr';
 import TsrParser from './tsr/TsrParser';
-import { eraseUp, wait } from './utils';
-import FileManager from './utils/FileManager';
-import FileMerger from './utils/FileMerger';
 
 export default async function merge(input: string, output: string): Promise<boolean> {
   const xprResult: Xpr = [];

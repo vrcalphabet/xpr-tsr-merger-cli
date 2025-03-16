@@ -1,10 +1,10 @@
 import path from 'path';
 import pc from 'picocolors';
+import { eraseUp, wait } from '../../utils';
+import FileManager from '../../utils/FileManager';
 import { XprGroup } from '../common/Xpr';
 import KeysParser from '../keys/KeysParser';
 import XprParser from '../xpr/XprParser';
-import { eraseUp, wait } from './';
-import FileManager from './FileManager';
 
 export default class FileMerger {
   private static xprFile = 'rule.xpr';

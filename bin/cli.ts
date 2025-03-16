@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import index from '../src/index';
+import complete from '../src/complete';
+import merger from '../src/merger';
 
 yargs(hideBin(process.argv))
-  .usage('使い方: npx merger [オプション]')
+  .usage('使い方: npx merger [コマンド] [オプション]')
   .command(
-    '$0',
+    'watch',
     'ファイルをマージする',
     (yargs) =>
       yargs
@@ -23,7 +24,21 @@ yargs(hideBin(process.argv))
           default: 'dist',
         }),
     (argv) => {
-      index(argv.input, argv.output);
+      merger(argv.input, argv.output);
+    }
+  )
+  .command(
+    'complete',
+    '翻訳キーを補完する',
+    (yargs) =>
+      yargs.option('input', {
+        type: 'string',
+        alisa: 'i',
+        describe: '入力フォルダ',
+        default: 'src',
+      }),
+    (argv) => {
+      complete(argv.input);
     }
   )
   .help().argv;

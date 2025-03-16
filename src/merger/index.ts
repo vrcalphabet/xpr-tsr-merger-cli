@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import pc from 'picocolors';
-import merge from './merger/merge';
+import merge from './merge';
 import Watcher from './Watcher';
 
-export default function index(input: string, output: string) {
+export default function index(input: string, output: string): void {
   console.clear();
   console.log('xpr+tsrマージシステム:', pc.green(`v${process.env.npm_package_version}`));
   console.log();
